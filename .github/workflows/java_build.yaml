@@ -20,10 +20,8 @@
 on:
   push:
     branches:
-#      - develop
-#      - main
-      # only for test in this repo
-      - develop-java
+     - develop
+     - main
 
   pull_request:
     branches:
@@ -70,11 +68,14 @@ jobs:
         id: check_report
         run: |
           if [[ -f "target/jacoco/index.html" ]]; then
+            echo found coverage report
             echo "coverage_report=yes" >> $GITHUB_OUTPUT
+          else
+            echo coverage report not found
           fi
 
       - name: Upload test coverage report to GitHub pages
-        if: steps.check_report.outputs.coverage == 'yes'
+        if: steps.check_report.outputs.coverage_report == 'yes'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -111,7 +112,7 @@ jobs:
           elif [ "${{ github.ref }}"  = "refs/heads/develop" ]; then
             TAG_PREFIX="develop"
           else
-            TAG_PREFIX="temp"
+            TAG_PREFIX="tempj"
           fi
 
           TAGS="${TAG_PREFIX}-${TAG_TIMESTAMP}"

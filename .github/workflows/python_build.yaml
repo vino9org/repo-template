@@ -20,10 +20,8 @@
 on:
   push:
     branches:
-      # - develop
-      # - main
-      # only for test in this repo
-      - develop-python
+      - develop
+      - main
 
   pull_request:
     branches:
@@ -67,7 +65,7 @@ jobs:
         fi
 
     - name: Upload test coverage report to GitHub pages
-      if: steps.unit_tests.outputs.coverage == 'yes'
+      if: steps.unit_tests.outputs.coverage_report == 'yes'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -83,7 +81,7 @@ jobs:
 
     - name: set image metadata
       id: meta
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: ghcr.io/${{ github.repository }}
         tags: |
