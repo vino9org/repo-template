@@ -70,6 +70,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: htmlcov
+      continue-on-error: true
 
   buildx:
     needs: pytest

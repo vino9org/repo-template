@@ -80,6 +80,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./target/site/jacoco
+        continue-on-error: true
 
   jib:
     needs: mvn-verify
